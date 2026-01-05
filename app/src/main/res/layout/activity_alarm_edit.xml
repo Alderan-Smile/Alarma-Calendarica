@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scroll_root"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:id="@+id/ll_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TimePicker
+            android:id="@+id/time_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:timePickerMode="spinner" />
+
+        <TextView android:layout_marginTop="8dp" android:text="Repetir en:" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+
+        <LinearLayout android:id="@+id/days_container" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content">
+            <CheckBox android:id="@+id/cb_sun" android:text="Domingo" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            <CheckBox android:id="@+id/cb_mon" android:text="Lunes" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            <CheckBox android:id="@+id/cb_tue" android:text="Martes" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            <CheckBox android:id="@+id/cb_wed" android:text="Miércoles" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            <CheckBox android:id="@+id/cb_thu" android:text="Jueves" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            <CheckBox android:id="@+id/cb_fri" android:text="Viernes" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            <CheckBox android:id="@+id/cb_sat" android:text="Sábado" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <EditText android:id="@+id/et_label" android:hint="Etiqueta" android:layout_width="match_parent" android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:id="@+id/cb_only_workdays"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sólo días laborales (excluye feriados)"
+            android:layout_marginTop="8dp" />
+
+        <!-- One-shot alarm checkbox -->
+        <CheckBox
+            android:id="@+id/cb_one_shot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Alarma única (suena una vez)"
+            android:layout_marginTop="8dp" />
+
+        <!-- Allow treating weekend days as workdays -->
+        <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingTop="8dp">
+            <CheckBox android:id="@+id/cb_saturday_workday" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Sábados laborables" />
+            <CheckBox android:id="@+id/cb_sunday_workday" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Domingos laborables" android:layout_marginStart="16dp" />
+        </LinearLayout>
+
+        <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content">
+            <Button android:id="@+id/btn_pick_sound" android:text="Elegir sonido" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            <TextView android:id="@+id/tv_sound_label" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:paddingStart="8dp" android:text="Sonido por defecto" />
+        </LinearLayout>
+
+        <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content">
+            <Button android:id="@+id/btn_save" android:text="Guardar" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" />
+            <Button android:id="@+id/btn_delete" android:text="Eliminar" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:visibility="gone" />
+            <Button android:id="@+id/btn_cancel" android:text="Cancelar" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

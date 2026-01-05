@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- IDs for programmatically added menu/actions -->
+    <item name="action_sync" type="id"/>
+    <item name="action_stop_current" type="id"/>
+</resources>

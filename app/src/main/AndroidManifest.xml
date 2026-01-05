@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest package="cl.drsmile.alarmacalendarica"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- For exact alarms (Android 12+) the app may need REQUEST_SCHEDULE_EXACT_ALARM granted by user -->
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" tools:ignore="ProtectedPermissions" />
+    <!-- Required for posting notifications on Android 13+ -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AlarmaCalendarica">
+
+        <!-- Alarm service that runs in foreground while ringing -->
+        <service android:name="cl.drsmile.alarmacalendarica.service.AlarmService" android:exported="false" android:foregroundServiceType="mediaPlayback" />
+
+        <!-- Broadcast receiver for the alarms (not exported) -->
+        <receiver android:name="cl.drsmile.alarmacalendarica.receiver.AlarmReceiver" android:exported="false" />
+        <receiver android:name="cl.drsmile.alarmacalendarica.receiver.BootReceiver" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_UNLOCKED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Activities for alarm UI -->
+        <activity android:name="cl.drsmile.alarmacalendarica.ui.CountrySelectionActivity" />
+        <activity android:name="cl.drsmile.alarmacalendarica.ui.AlarmEditActivity" />
+        <activity android:name="cl.drsmile.alarmacalendarica.ui.AlarmListActivity" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- Handle system alarm intents so the app can be used to set/show alarms -->
+            <intent-filter>
+                <action android:name="android.intent.action.SET_ALARM" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SHOW_ALARMS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name="cl.drsmile.alarmacalendarica.ui.AlarmCalendarActivity" android:exported="false" />
+        <activity android:name="cl.drsmile.alarmacalendarica.ui.CustomHolidayActivity" android:exported="false" />
+        <activity android:name="cl.drsmile.alarmacalendarica.ui.CustomHolidayListActivity" android:exported="false" />
+
+    </application>
+
+</manifest>
