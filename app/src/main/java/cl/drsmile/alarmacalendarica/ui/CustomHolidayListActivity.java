@@ -26,6 +26,9 @@ import cl.drsmile.alarmacalendarica.conn.LocalRepository;
 import cl.drsmile.alarmacalendarica.db.HolidayEntity;
 
 import androidx.core.content.FileProvider;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 // explicit import for adapter (same package) to ensure resolution
 import cl.drsmile.alarmacalendarica.ui.CustomHolidayAdapter;
@@ -46,6 +49,14 @@ public class CustomHolidayListActivity extends AppCompatActivity implements Cust
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_holiday_list);
+        // Apply window insets to avoid overlap with status/navigation
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(android.R.id.content), (v, insets) -> {
+            Insets sys = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(v.getPaddingLeft(), v.getPaddingTop() + sys.top, v.getPaddingRight(), v.getPaddingBottom() + sys.bottom);
+            return insets;
+        });
+        ViewCompat.requestApplyInsets(findViewById(android.R.id.content));
+
         repo = new LocalRepository(this);
         // default country from preferences
         country = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this).getString("pref_country", "CL");

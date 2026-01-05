@@ -9,6 +9,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.WindowInsetsCompat.Type;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -26,6 +30,14 @@ public class CustomHolidayActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_holiday);
+
+        // Apply window insets padding so content doesn't overlap status/navigation bars
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(android.R.id.content), (v, insets) -> {
+            Insets sys = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(v.getPaddingLeft(), v.getPaddingTop() + sys.top, v.getPaddingRight(), v.getPaddingBottom() + sys.bottom);
+            return insets;
+        });
+        ViewCompat.requestApplyInsets(findViewById(android.R.id.content));
 
         etName = findViewById(R.id.et_holiday_name);
         btnPickStart = findViewById(R.id.btn_pick_start_date);

@@ -1,18 +1,18 @@
-# AlarmaCalendarica
+AlarmaCalendarica
+=================
 
-Proyecto Android: AlarmaCalendarica
+Autor: OLIVER Consterla (@Alderan-Smile)
 
 Descripción
+-----------
+AlarmaCalendarica es una app para gestionar alarmas que consideran feriados (oficiales y personalizados). Este repositorio contiene la app Android y la base de datos local (Room).
 
-Esta aplicación gestiona alarmas con consideración de feriados (incluyendo feriados personalizados). Permite configurar alarmas recurrentes, distinguir laborables y aplicar excepciones por feriados.
-
-Autor
-
-- OLIVER Consterla (@Alderan-Smile)
-
-Resumen de funcionalidades (estado actual y notas)
-
-- Listado y gestión de alarmas.
-- Soporte de feriados y feriados personalizados.
-- Carga de feriados limitada en memoria a dos años (año actual y siguiente) para reducir uso de recursos.
-
+Resumen de cambios recientes (entregados)
+-----------------------------------------
+- Corregido solapamiento de UI con la barra de estado y la barra de navegación en las pantallas de calendario y gestión de feriados personalizados: ahora las Activities usan WindowInsets para ajustar padding del contenido.
+- Evitar pérdida de feriados personalizados al actualizar/guardar feriados oficiales:
+  - Se eliminó `fallbackToDestructiveMigration()` en `AppDatabase` para prevenir borrados automáticos de la DB.
+  - Al guardar feriados oficiales ahora se eliminan únicamente los feriados "no personalizados" del año/pais (`deleteNonCustomByCountryAndYear`), preservando feriados creados por el usuario.
+  - Cambiada la estrategia de inserción en `HolidayDao` a `OnConflictStrategy.IGNORE` para evitar sobrescribir/exceder datos existentes.
+- Dedupe en la inserción por rango: al insertar un rango de feriados personalizados, la app evita insertar duplicados exactos (fecha+nombre).
+- Añadidos handlers UI para evitar solapamientos en `CustomHolidayActivity` y `CustomHolidayListActivity`.

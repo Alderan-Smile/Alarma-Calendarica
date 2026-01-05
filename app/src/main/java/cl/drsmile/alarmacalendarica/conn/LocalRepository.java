@@ -59,10 +59,10 @@ public class LocalRepository {
                 if (yearForBatch == null) yearForBatch = he.year;
                 entities.add(he);
             }
-            // remove existing holidays for this country/year to keep DB consistent
+            // remove existing official (non-custom) holidays for this country/year to keep DB consistent but keep custom ones
             try {
                 if (countryForBatch != null && yearForBatch != null) {
-                    db.holidayDao().deleteByCountryAndYear(countryForBatch, yearForBatch);
+                    db.holidayDao().deleteNonCustomByCountryAndYear(countryForBatch, yearForBatch);
                 }
             } catch (Exception ignored) {}
             db.holidayDao().insertAll(entities);
