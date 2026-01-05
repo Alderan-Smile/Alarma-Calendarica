@@ -1,7 +1,7 @@
 AlarmaCalendarica
 =================
 
-Autor: OLIVER Consterla (@Alderan-Smile)
+Autor: Oliver Consterla (@Alderan-Smile).
 
 Descripción
 -----------

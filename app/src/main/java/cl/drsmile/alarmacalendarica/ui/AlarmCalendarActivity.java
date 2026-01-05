@@ -84,6 +84,31 @@ public class AlarmCalendarActivity extends AppCompatActivity {
                 toolbar.setPadding(base[0], base[1] + sysTop, base[2], base[3]);
             }
 
+            // adjust FloatingActionButton margin so it sits above navigation bar
+            View fab = findViewById(R.id.btn_add_custom_holiday);
+            if (fab != null) {
+                // store base margin in tag
+                int[] base = (int[]) fab.getTag(R.id.btn_add_custom_holiday);
+                if (base == null) {
+                    // left, top, right, bottom margins baseline (we'll only adjust bottom)
+                    if (fab.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
+                        ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) fab.getLayoutParams();
+                        base = new int[]{lp.leftMargin, lp.topMargin, lp.rightMargin, lp.bottomMargin};
+                    } else base = new int[]{0,0,0,0};
+                    fab.setTag(R.id.btn_add_custom_holiday, base);
+                }
+                if (fab.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
+                    ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) fab.getLayoutParams();
+                    lp.leftMargin = base[0] + navRight + extra; // nudge away from right inset
+                    lp.rightMargin = base[2] + navRight + extra;
+                    lp.bottomMargin = base[3] + navBottom + extra;
+                    fab.setLayoutParams(lp);
+                } else {
+                    // fallback: adjust padding
+                    fab.setPadding(fab.getPaddingLeft(), fab.getPaddingTop(), fab.getPaddingRight() + navRight + extra, fab.getPaddingBottom() + navBottom + extra);
+                }
+            }
+
             return insets;
         });
         ViewCompat.requestApplyInsets(content);
