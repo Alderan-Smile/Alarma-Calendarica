@@ -20,6 +20,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
 public class CountrySelectionActivity extends AppCompatActivity {
     public static final String EXTRA_SELECTED = "selected_country";
 
@@ -30,6 +34,15 @@ public class CountrySelectionActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_country_selection);
+
+        // Apply window insets so the header and list don't overlap system bars
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(android.R.id.content), (v, insets) -> {
+            Insets sys = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            // add top and bottom insets to the content padding
+            v.setPadding(v.getPaddingLeft(), v.getPaddingTop() + sys.top, v.getPaddingRight(), v.getPaddingBottom() + sys.bottom);
+            return insets;
+        });
+        ViewCompat.requestApplyInsets(findViewById(android.R.id.content));
 
         lv = findViewById(R.id.lv_countries);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, new ArrayList<>());
